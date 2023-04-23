@@ -8,7 +8,9 @@ namespace Labb2LINQ.Models
         [Key]
         [DatabaseGenerated(databaseGeneratedOption: DatabaseGeneratedOption.Identity)]
         public int TeacherId { get; set; }
-        public string FirstName { get; set; }
+        [StringLength(50)]
+        public string FirstMidName { get; set; }
+        [StringLength(50)]
         public string LastName { get; set; }
     }
 }

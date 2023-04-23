@@ -8,5 +8,6 @@ namespace Labb2LINQ.Models
         [Key]
         [DatabaseGenerated(databaseGeneratedOption: DatabaseGeneratedOption.Identity)]
         public int ClassId { get; set; }
+        public string ClassName { get; set; }
     }
 }
