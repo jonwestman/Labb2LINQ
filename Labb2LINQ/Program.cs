@@ -1,3 +1,7 @@
+using Labb2LINQ.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 namespace Labb2LINQ
 {
     public class Program
@@ -8,6 +12,9 @@ namespace Labb2LINQ
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<SchoolDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 
