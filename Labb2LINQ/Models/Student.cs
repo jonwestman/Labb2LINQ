@@ -10,8 +10,10 @@ namespace Labb2LINQ.Models
         [DatabaseGenerated(databaseGeneratedOption: DatabaseGeneratedOption.Identity)]
         public int StudentId { get; set; }
         [StringLength(50)]
+        [DisplayName("First name")]
         public string FirstMidName { get; set; }
         [StringLength(50)]
+        [DisplayName("Last name")]
         public string LastName { get; set; }
         [ForeignKey(nameof(Classes))]
         [DisplayName("Class")]

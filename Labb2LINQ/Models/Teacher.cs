@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Labb2LINQ.Models
@@ -9,8 +10,10 @@ namespace Labb2LINQ.Models
         [DatabaseGenerated(databaseGeneratedOption: DatabaseGeneratedOption.Identity)]
         public int TeacherId { get; set; }
         [StringLength(50)]
+        [DisplayName("First name")]
         public string FirstMidName { get; set; }
         [StringLength(50)]
+        [DisplayName("Last name")]
         public string LastName { get; set; }
         public virtual ICollection<Course>? Courses { get; set; }
     }
