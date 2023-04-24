@@ -59,6 +59,11 @@ namespace Labb2LINQ.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StudentId,FirstMidName,LastName,FK_ClassId")] Student student)
         {
+            var errors = ModelState
+               .Where(x => x.Value.Errors.Count > 0)
+               .Select(x => new { x.Key, x.Value.Errors })
+               .ToArray();
+
             if (ModelState.IsValid)
             {
                 _context.Add(student);
