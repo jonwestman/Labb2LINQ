@@ -12,5 +12,6 @@ namespace Labb2LINQ.Models
         public string FirstMidName { get; set; }
         [StringLength(50)]
         public string LastName { get; set; }
+        public virtual ICollection<Course>? Courses { get; set; }
     }
 }
