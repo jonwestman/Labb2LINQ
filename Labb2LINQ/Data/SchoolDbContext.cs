@@ -6,11 +6,9 @@ namespace Labb2LINQ.Data
 {
     public class SchoolDbContext : DbContext
     {
-        private readonly SchoolDbContext _context;
-        public SchoolDbContext(SchoolDbContext context)
+        public SchoolDbContext(DbContextOptions<SchoolDbContext> options) :base(options)
         {
 
-            _context = context;
 
         }
         public DbSet<Teacher> Teachers { get; set; }
