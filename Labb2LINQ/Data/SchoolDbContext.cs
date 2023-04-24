@@ -9,7 +9,6 @@ namespace Labb2LINQ.Data
         public SchoolDbContext(DbContextOptions<SchoolDbContext> options) :base(options)
         {
 
-
         }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Student> Students { get; set; }
