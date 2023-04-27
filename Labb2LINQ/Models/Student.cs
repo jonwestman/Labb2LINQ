@@ -20,6 +20,7 @@ namespace Labb2LINQ.Models
         public int FK_ClassId { get; set; }
         [DisplayName("Class")]
         public virtual Class? Classes { get; set; }
-        public virtual ICollection<Course>? Courses { get; set; }
+        public virtual ICollection<StudentCourse>? StudentCourses { get; set; }
+
     }
 }
