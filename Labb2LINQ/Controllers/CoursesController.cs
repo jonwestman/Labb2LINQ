@@ -22,7 +22,7 @@ namespace Labb2LINQ.Controllers
         // GET: Courses
         public async Task<IActionResult> Index()
         {
-            var schoolDbContext = _context.Courses.Include(c => c.Students).Include(c => c.Teachers);
+            var schoolDbContext = _context.Courses.Include(c => c.Teachers);
             return View(await schoolDbContext.ToListAsync());
         }
 
@@ -35,7 +35,6 @@ namespace Labb2LINQ.Controllers
             }
 
             var course = await _context.Courses
-                .Include(c => c.Students)
                 .Include(c => c.Teachers)
                 .FirstOrDefaultAsync(m => m.CourseId == id);
             if (course == null)
@@ -49,7 +48,6 @@ namespace Labb2LINQ.Controllers
         // GET: Courses/Create
         public IActionResult Create()
         {
-            ViewData["FK_StudentId"] = new SelectList(_context.Students, "StudentId", "StudentId");
             ViewData["FK_TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherId");
             return View();
         }
@@ -59,7 +57,7 @@ namespace Labb2LINQ.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CourseId,Title,FK_StudentId,FK_TeacherId")] Course course)
+        public async Task<IActionResult> Create([Bind("CourseId,Title,FK_TeacherId")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +65,6 @@ namespace Labb2LINQ.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FK_StudentId"] = new SelectList(_context.Students, "StudentId", "StudentId", course.FK_StudentId);
             ViewData["FK_TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherId", course.FK_TeacherId);
             return View(course);
         }
@@ -85,7 +82,6 @@ namespace Labb2LINQ.Controllers
             {
                 return NotFound();
             }
-            ViewData["FK_StudentId"] = new SelectList(_context.Students, "StudentId", "StudentId", course.FK_StudentId);
             ViewData["FK_TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherId", course.FK_TeacherId);
             return View(course);
         }
@@ -95,7 +91,7 @@ namespace Labb2LINQ.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CourseId,Title,FK_StudentId,FK_TeacherId")] Course course)
+        public async Task<IActionResult> Edit(int id, [Bind("CourseId,Title,FK_TeacherId")] Course course)
         {
             if (id != course.CourseId)
             {
@@ -122,7 +118,6 @@ namespace Labb2LINQ.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FK_StudentId"] = new SelectList(_context.Students, "StudentId", "StudentId", course.FK_StudentId);
             ViewData["FK_TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherId", course.FK_TeacherId);
             return View(course);
         }
@@ -136,7 +131,6 @@ namespace Labb2LINQ.Controllers
             }
 
             var course = await _context.Courses
-                .Include(c => c.Students)
                 .Include(c => c.Teachers)
                 .FirstOrDefaultAsync(m => m.CourseId == id);
             if (course == null)
