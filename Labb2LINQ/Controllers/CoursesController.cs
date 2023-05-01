@@ -48,7 +48,7 @@ namespace Labb2LINQ.Controllers
         // GET: Courses/Create
         public IActionResult Create()
         {
-            ViewData["FK_TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherId");
+            ViewData["FK_TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "FirstMidName");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace Labb2LINQ.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FK_TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherId", course.FK_TeacherId);
+            ViewData["FK_TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "FirstMidName", course.FK_TeacherId);
             return View(course);
         }
 
@@ -82,7 +82,7 @@ namespace Labb2LINQ.Controllers
             {
                 return NotFound();
             }
-            ViewData["FK_TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherId", course.FK_TeacherId);
+            ViewData["FK_TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "FirstMidName", course.FK_TeacherId);
             return View(course);
         }
 
@@ -118,7 +118,7 @@ namespace Labb2LINQ.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FK_TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherId", course.FK_TeacherId);
+            ViewData["FK_TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "FirstMidName", course.FK_TeacherId);
             return View(course);
         }
 

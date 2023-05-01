@@ -10,9 +10,11 @@ namespace Labb2LINQ.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int StudentCourseId { get; set; }
         [ForeignKey(nameof(Students))]
+        [DisplayName("Student")]
         public int FK_StudentId { get; set; }
         public virtual Student? Students { get; set; }
         [ForeignKey(nameof(Courses))]
+        [DisplayName("Course")]
         public int FK_CourseId { get; set; }
         public virtual Course? Courses { get; set; }
     }

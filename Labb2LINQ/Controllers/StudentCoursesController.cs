@@ -50,7 +50,7 @@ namespace Labb2LINQ.Controllers
         public IActionResult Create()
         {
             ViewData["FK_CourseId"] = new SelectList(_context.Courses, "CourseId", "Title");
-            ViewData["FK_StudentId"] = new SelectList(_context.Students, "StudentId", "StudentId");
+            ViewData["FK_StudentId"] = new SelectList(_context.Students, "StudentId", "FirstMidName");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace Labb2LINQ.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["FK_CourseId"] = new SelectList(_context.Courses, "CourseId", "Title", studentCourse.FK_CourseId);
-            ViewData["FK_StudentId"] = new SelectList(_context.Students, "StudentId", "StudentId", studentCourse.FK_StudentId);
+            ViewData["FK_StudentId"] = new SelectList(_context.Students, "StudentId", "FirstMidName", studentCourse.FK_StudentId);
             return View(studentCourse);
         }
 
@@ -86,7 +86,7 @@ namespace Labb2LINQ.Controllers
                 return NotFound();
             }
             ViewData["FK_CourseId"] = new SelectList(_context.Courses, "CourseId", "Title", studentCourse.FK_CourseId);
-            ViewData["FK_StudentId"] = new SelectList(_context.Students, "StudentId", "StudentId", studentCourse.FK_StudentId);
+            ViewData["FK_StudentId"] = new SelectList(_context.Students, "StudentId", "FirstMidName", studentCourse.FK_StudentId);
             return View(studentCourse);
         }
 
@@ -123,7 +123,7 @@ namespace Labb2LINQ.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["FK_CourseId"] = new SelectList(_context.Courses, "CourseId", "Title", studentCourse.FK_CourseId);
-            ViewData["FK_StudentId"] = new SelectList(_context.Students, "StudentId", "StudentId", studentCourse.FK_StudentId);
+            ViewData["FK_StudentId"] = new SelectList(_context.Students, "StudentId", "FirstMidName", studentCourse.FK_StudentId);
             return View(studentCourse);
         }
 
