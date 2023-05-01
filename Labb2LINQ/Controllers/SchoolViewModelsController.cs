@@ -22,9 +22,36 @@ namespace Labb2LINQ.Controllers
         // GET: SchoolViewModels
         public async Task<IActionResult> Index()
         {
-              return _context.SchoolViewModel != null ? 
-                          View(await _context.SchoolViewModel.ToListAsync()) :
-                          Problem("Entity set 'SchoolDbContext.SchoolViewModel'  is null.");
+              List<SchoolViewModel> list = new List<SchoolViewModel>();
+
+            var items = await (from cl in _context.Classes
+                               join s in _context.Students on cl.ClassId equals s.FK_ClassId
+                               join sc in _context.StudentCourse on s.StudentId equals sc.FK_StudentId
+                               join c in _context.Courses on sc.FK_CourseId equals c.CourseId
+                               join tc in _context.TeacherCourse on c.CourseId equals tc.FK_CourseId
+                               join t in _context.Teachers on tc.FK_TeacherId equals t.TeacherId
+                               where t.TeacherId == tc.FK_TeacherId && cl.ClassId == s.FK_ClassId
+                               select new
+                               {
+                                   StudentFName = s.FirstMidName,
+                                   StudentLName = s.LastName,
+                                   ClassName = cl.ClassName,
+                                   CourseName = c.Title,
+                                   TeacherFName = t.FirstMidName,
+                                   TeacherLName = t.LastName,
+                               }).ToListAsync();
+            foreach (var item in items)
+            {
+                SchoolViewModel listitem = new SchoolViewModel();
+                listitem.StudentFName = item.StudentFName;
+                listitem.StudentLName = item.StudentLName;
+                listitem.ClassName = item.ClassName;
+                listitem.CourseName = item.CourseName;
+                listitem.TeacherFName = item.TeacherFName;
+                listitem.TeacherLName = item.TeacherLName;
+                list.Add(listitem);
+            }
+            return View(list);
         }
 
         // GET: SchoolViewModels/Details/5
