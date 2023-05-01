@@ -15,6 +15,6 @@ namespace Labb2LINQ.Models
         [StringLength(50)]
         [DisplayName("Last name")]
         public string LastName { get; set; }
-        public virtual ICollection<Course>? Courses { get; set; }
+        public ICollection<TeacherCourse>? TeacherCourses { get; set; }
     }
 }
