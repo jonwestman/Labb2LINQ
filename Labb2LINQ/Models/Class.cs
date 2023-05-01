@@ -10,6 +10,7 @@ namespace Labb2LINQ.Models
         [DatabaseGenerated(databaseGeneratedOption: DatabaseGeneratedOption.Identity)]
         public int ClassId { get; set; }
         [Required]
+        [StringLength(30)]
         [DisplayName("Class")]
         public string ClassName { get; set; }
         public virtual ICollection<Student>? Students { get; set; }
