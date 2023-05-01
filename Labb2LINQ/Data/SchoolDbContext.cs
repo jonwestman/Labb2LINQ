@@ -16,5 +16,6 @@ namespace Labb2LINQ.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Labb2LINQ.Models.StudentCourse> StudentCourse { get; set; } = default!;
         public DbSet<Labb2LINQ.Models.TeacherCourse> TeacherCourse { get; set; } = default!;
+        public DbSet<Labb2LINQ.Models.SchoolViewModel> SchoolViewModel { get; set; } = default!;
     }
 }
