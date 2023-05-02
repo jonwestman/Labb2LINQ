@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Labb2LINQ.Data;
 using Labb2LINQ.Models;
+using System.Collections.Generic;
 
 namespace Labb2LINQ.Controllers
 {
@@ -20,7 +21,8 @@ namespace Labb2LINQ.Controllers
         }
 
         // GET: SchoolViewModels
-        public async Task<IActionResult> Index()
+        // Get all Students and their teachers
+        public async Task<IActionResult> GetAllStudentsTeachers()
         {
               List<SchoolViewModel> list = new List<SchoolViewModel>();
 
@@ -51,6 +53,59 @@ namespace Labb2LINQ.Controllers
                 listitem.TeacherLName = item.TeacherLName;
                 list.Add(listitem);
             }
+            return View(list);
+        }
+
+        //Get all teachers currently teaching the course "programmering1"
+        public async Task<IActionResult> GetTeachers()
+        {
+            List<SchoolViewModel> list = new List<SchoolViewModel>();
+
+            var items = await (from t in _context.Teachers
+                               join tc in _context.TeacherCourse on t.TeacherId equals tc.FK_TeacherId
+                               join co in _context.Courses on tc.FK_CourseId equals co.CourseId
+                               where co.Title == "programmering1"
+                               select new
+                               {
+                                   CourseName = co.Title,
+                                   TeacherFName = t.FirstMidName,
+                                   TeacherLName = t.LastName,
+                               }).ToListAsync();
+            foreach (var item in items)
+            {
+                SchoolViewModel listitem = new SchoolViewModel();
+                listitem.CourseName = item.CourseName;
+                listitem.TeacherFName = item.TeacherFName;
+                listitem.TeacherLName = item.TeacherLName;
+                list.Add(listitem);
+            }
+
+            return View(list);
+        }
+        //Get all students currently learning the course "programmering1"
+        public async Task<IActionResult> GetStudents()
+        {
+            List<SchoolViewModel> list = new List<SchoolViewModel>();
+
+            var items = await (from s in _context.Students
+                               join sc in _context.StudentCourse on s.StudentId equals sc.FK_StudentId
+                               join co in _context.Courses on sc.FK_CourseId equals co.CourseId
+                               where co.Title == "programmering1"
+                               select new
+                               {
+                                   CourseName = co.Title,
+                                   StudentFName = s.FirstMidName,
+                                   StudentLName = s.LastName,
+                               }).ToListAsync();
+            foreach (var item in items)
+            {
+                SchoolViewModel listitem = new SchoolViewModel();
+                listitem.CourseName = item.CourseName;
+                listitem.StudentFName = item.StudentFName;
+                listitem.StudentLName = item.StudentLName;
+                list.Add(listitem);
+            }
+
             return View(list);
         }
 
