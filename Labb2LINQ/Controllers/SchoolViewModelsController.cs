@@ -90,12 +90,16 @@ namespace Labb2LINQ.Controllers
             var items = await (from s in _context.Students
                                join sc in _context.StudentCourse on s.StudentId equals sc.FK_StudentId
                                join co in _context.Courses on sc.FK_CourseId equals co.CourseId
+                               join tc in _context.TeacherCourse on co.CourseId equals tc.FK_CourseId
+                               join t in _context.Teachers on tc.FK_TeacherId equals t.TeacherId
                                where co.Title == "programmering1"
                                select new
                                {
                                    CourseName = co.Title,
                                    StudentFName = s.FirstMidName,
                                    StudentLName = s.LastName,
+                                   TeacherFName = t.FirstMidName,
+                                   TeacherLName = t.LastName,
                                }).ToListAsync();
             foreach (var item in items)
             {
@@ -103,6 +107,8 @@ namespace Labb2LINQ.Controllers
                 listitem.CourseName = item.CourseName;
                 listitem.StudentFName = item.StudentFName;
                 listitem.StudentLName = item.StudentLName;
+                listitem.TeacherFName = item.TeacherFName;
+                listitem.TeacherLName = item.TeacherLName;
                 list.Add(listitem);
             }
 
