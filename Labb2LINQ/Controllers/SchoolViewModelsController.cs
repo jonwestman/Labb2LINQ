@@ -115,6 +115,53 @@ namespace Labb2LINQ.Controllers
             return View(list);
         }
 
+        //POST set CourseName to something else
+        public IActionResult CourseName() { return View(); }    
+        public async Task<IActionResult>SetCourseName(string CurrentCourseName, string NewCourseName)
+        {
+            var course = (from c in _context.Courses
+                          where c.Title == CurrentCourseName
+                          select c).FirstOrDefault();
+            if (course==null)
+            {
+                return NotFound("Course name not found. Please try again");
+            }
+
+            course.Title = NewCourseName;
+            await _context.SaveChangesAsync();
+
+            return View();
+
+        }
+
+        //POST set new teacher
+        public IActionResult UpdateTeacher()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> SetTeacher(string CourseName, string TeacherLName)
+        {
+            var currentTeacher = (from c in _context.Courses
+                                   join tc in _context.TeacherCourse on c.CourseId equals tc.FK_CourseId
+                                   join t in _context.Teachers on tc.FK_TeacherId equals t.TeacherId
+                                   where t.TeacherId == tc.FK_TeacherId && c.CourseId == tc.FK_CourseId && c.Title == CourseName
+                                   select t).FirstOrDefault();
+
+            var newTeacher = (from t in _context.Teachers
+                              where t.LastName == TeacherLName
+                              select t).FirstOrDefault();
+
+            var updateTeacher = (from tc in _context.TeacherCourse
+                                 where tc.FK_TeacherId == currentTeacher.TeacherId
+                                 select tc).FirstOrDefault();
+
+            updateTeacher.FK_TeacherId = newTeacher.TeacherId;
+            await _context.SaveChangesAsync();
+
+            return View();
+        }
+
         // GET: SchoolViewModels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
